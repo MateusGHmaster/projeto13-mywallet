@@ -22,7 +22,7 @@ const loginSchema = Joi.object({
 
 });
 
-const sigUpSchema = Joi.object({
+const signUpSchema = Joi.object({
 
     name: Joi.string().min(3).required(),
     email: Joi.string().email({minDomainSegments: 2, tlds: { allow: ['com', 'net'] }}).required(),
@@ -55,13 +55,13 @@ app.post('/login', async (req, res) => {
         if (user && bcrypt.compareSync(login.password, user.password)) {
 
             const token = v4();
-            console.log(`Login token created: ${token}`);
             await database.collection('sessions').insertOne({
 
                 token,
                 userId: user._id
 
             });
+            
             res.status(200).send(token);
 
         } else {
@@ -81,14 +81,64 @@ app.post('/login', async (req, res) => {
 
 app.post('/sign-up', async (req, res) => {
 
+    const signUp = req.body;
+    const isValidSignUp = signUpSchema.validate(signUp, {abortEarly: false});
 
+    if (isValidSignUp.error) {
+
+        return res.status(409).send('Ocorreu um erro. Por favor, insira os dados corretamente');
+
+    }
+
+    try {
+
+        const user = await database.collection('users').insertOne({ 
+            ...signUp,
+            password: bcrypt.hashSync(signUp.password, 10)
+        })
+
+        console.log('New user created');
+        res.status(201).send('New user registered!');
+
+    } catch (e) {
+
+        res.status(500).send('Failed to register new user. Please, try again later');
+
+    }
 
 });
 
 app.get('/home', async (req, res) => {
 
     const { authorization } = req.headers.authorization;
-    const token = authorization.replace('Bearer', '').trim();
+    const token = authorization ?.replace('Bearer', '').trim();
+
+    if (!token) {
+
+        return res.sendStatus(401);
+
+    }
+
+    const session = await database.collection('sessions').findOne({ token });
+    
+    if (!session) {
+
+        return res.sendStatus(401);
+
+    }
+
+    const user = await database.collection('users').findOne({ _id: session.userId });
+
+    if (!user) {
+
+        return res.status(404).send('Not found');
+
+    }
+
+    delete user.password;
+    delete user._id;
+    
+    res.send(user);
 
 });
 
