@@ -1,4 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Login from './Login';
+import SignUp from './SignUp';
+import Home from './Home';
+import NewEntrance from './NewEntrance';
+import NewWithdraw from './NewWithdraw';
 
 export default function App () {
 
@@ -6,11 +11,11 @@ export default function App () {
 
         <BrowserRouter>
             <Routes>
-                <Route path='/' />
-                <Route path='/sign-up'/>
-                <Route path='/home' />
-                <Route path='/new-entrance' />
-                <Route path='/new-withdraw' />
+                <Route path='/' element={ <Login /> } />
+                <Route path='/sign-up' element={ <SignUp /> }/>
+                <Route path='/home' element={ <Home /> }/>
+                <Route path='/new-entrance' element={ <NewEntrance /> }/>
+                <Route path='/new-withdraw' element={ <NewWithdraw /> } />
             </Routes>
         </BrowserRouter>
 
