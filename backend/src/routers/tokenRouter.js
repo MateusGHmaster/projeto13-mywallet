@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { userLogin } from "../controllers/tokenController";
-import { validLogin } from '../middlewares/isValidLoginSchema';
+import { userLogin } from "../controllers/tokenController.js";
+import validLogin from '../middlewares/isValidLoginSchema.js';
 
 const tokenRouter = Router();
 

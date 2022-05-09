@@ -1,6 +1,6 @@
-import transactionSchema from "../schemas/transactionSchema";
+import transactionSchema from "../schemas/transactionSchema.js";
 
-export default function validTransaction (req, res, next) {
+export function validTransaction (req, res, next) {
 
     const transaction = req.body;
 

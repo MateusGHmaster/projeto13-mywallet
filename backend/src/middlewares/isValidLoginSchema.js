@@ -1,4 +1,4 @@
-import loginSchema from "../schemas/loginSchema";
+import loginSchema from "../schemas/loginSchema.js";
 
 export default function validLogin (req, res, next) {
 

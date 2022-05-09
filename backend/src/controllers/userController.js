@@ -1,4 +1,4 @@
-import database from '../database';
+import {database} from '../database.js';
 import { v4 } from 'uuid';
 import bcrypt from 'bcrypt';
 import dayjs from 'dayjs';
@@ -24,7 +24,7 @@ export async function createUser (req, res) {
 
 }
 
-export default function createTransaction (req, res) {
+export async function createTransaction (req, res) {
 
     const transaction = req.body;
     const { user } = res.locals;

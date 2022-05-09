@@ -1,6 +1,6 @@
-import signUpSchema from "../schemas/signUpSchema";
+import signUpSchema from "../schemas/signUpSchema.js";
 
-export default function validSignUp (req, res, next) {
+export function validSignUp (req, res, next) {
 
     const user = req.body;
 

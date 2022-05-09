@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { createTransaction, createUser, getHome } from '../controllers/userController';
-import { validSignUp } from '../middlewares/isValidSignUprSchema';
-import { validTransaction } from '../middlewares/isValidTransactionSchema';
-import { validToken } from '../middlewares/isValidTokenSchema';
+import { createTransaction, createUser, getHome } from '../controllers/userController.js';
+import { validSignUp } from '../middlewares/isValidSignUprSchema.js';
+import { validTransaction } from '../middlewares/isValidTransactionSchema.js';
+import { validToken } from '../middlewares/isValidTokenSchema.js';
 
 const userRouter = Router();
 

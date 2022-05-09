@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { v4 } from 'uuid';
-import database from '../database';
+import {database} from '../database.js';
 
 export async function userLogin (req, res) {
 
@@ -10,6 +10,7 @@ export async function userLogin (req, res) {
 
     if (!user) {
 
+        console.log(user);
         return res.sendStatus(404);
 
     }

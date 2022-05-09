@@ -3,11 +3,20 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const mongoClient = new MongoClient(process.env.MONGO_URL);
-mongoClient.connect().then(() => {
+export let database = null;
 
-    database = mongoClient.db('my-wallet');   
+export function mongoConnection () {
 
-});
+    const mongoClient = new MongoClient(process.env.MONGO_URL);
+    mongoClient.connect().then(() => {
+    
+        database = mongoClient.db('my-wallet');   
+    
+    }).catch((e) => {
+    
+        console.log(e);
+    
+    });
 
-export default database;
+}
+
