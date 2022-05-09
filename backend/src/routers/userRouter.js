@@ -6,7 +6,7 @@ import { validToken } from '../middlewares/isValidTokenSchema.js';
 
 const userRouter = Router();
 
-userRouter.post('/home', validSignUp, createUser);
+userRouter.post('/sign-up', validSignUp, createUser);
 userRouter.post('/home/transactions', validToken, validTransaction, createTransaction);
 userRouter.get('/home', validToken, getHome);
 
