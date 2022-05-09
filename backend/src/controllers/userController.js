@@ -27,6 +27,7 @@ export async function createUser (req, res) {
 export default function createTransaction (req, res) {
 
     const transaction = req.body;
+    const { user } = res.locals;
 
     const amount = transaction;
 
@@ -36,7 +37,7 @@ export default function createTransaction (req, res) {
 
             ...transaction,
             id: v4(),
-            amount: amount, 
+            amount: transaction.amount, 
             registeredAt: dayjs().format('DD/MM') 
 
         }
@@ -60,6 +61,41 @@ export default function createTransaction (req, res) {
 
 export async function getHome (req, res) {
 
+    const { user } = res.locals;
+
+    try {
+
+        let userTotalAmount = 0;
+
+        user.transactions.forEach(transaction => {
+            
+            if (transaction.type === 'entrance') {
+
+                userTotalAmount += transaction.amount;
     
+            } else {
+    
+                userTotalAmount -= transaction.amount;
+    
+            }
+
+        });
+
+        const userAmountStatus = {
+
+            ...user,
+            userTotalAmount
+
+        };
+
+        delete userAmountStatus.password;
+
+        res.send(userAmountStatus);
+
+    } catch (e) {
+
+        return res.sendStatus(500);
+
+    }
 
 }
